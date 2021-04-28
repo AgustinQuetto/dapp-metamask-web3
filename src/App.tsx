@@ -73,10 +73,12 @@ function App() {
         Saldo: {balance} ETH
       </div>
       <div>
-        <button onClick={getAccounts}>Obtener cuentas Metamask</button>{" "}
+        <button onClick={getAccounts}>
+          Obtener balance de cuentas en Metamask
+        </button>{" "}
         {metamaskWallets?.map((mmw) => (
           <div>
-            {mmw.account}: {mmw.balance}
+            {mmw.account}: {mmw.balance} ETH
           </div>
         ))}
       </div>
