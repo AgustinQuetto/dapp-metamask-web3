@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch /* , useSelector */ } from "react-redux";
 import Web3 from "web3";
 import "./App.css";
+import { getBalance as _getBalance /* , getAccounts */ } from "./redux/actions";
 
 declare global {
   interface Window {
@@ -20,6 +22,11 @@ interface State {
 }
 
 function App() {
+  const dispatch = useDispatch();
+
+  //test purposes
+  //const _balance = useSelector((state: any) => state.balance);
+
   const [state, setState] = useState<State>({
     balance: 0,
   });
@@ -45,6 +52,7 @@ function App() {
   };
 
   const getBalance = async (account: string) => {
+    dispatch(_getBalance({ account }));
     const weiBalance = await web3Instance.eth.getBalance(account);
     const ethBalance = web3Instance.utils.fromWei(weiBalance, "ether");
     return { account: account, balance: parseInt(ethBalance) };
@@ -77,7 +85,7 @@ function App() {
           Obtener balance de cuentas en Metamask
         </button>{" "}
         {metamaskWallets?.map((mmw) => (
-          <div>
+          <div key={mmw.account}>
             {mmw.account}: {mmw.balance} ETH
           </div>
         ))}
